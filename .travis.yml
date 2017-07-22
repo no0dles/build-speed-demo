@@ -1,0 +1,13 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker info
+
+script:
+  - docker build -t build-speed-demo-build -f Dockerfile.build .
+  - docker build -t build-speed-demo-lint -f Dockerfile.lint .
+  - docker build -t build-speed-demo-test -f Dockerfile.test .
+  - docker build -t build-speed-demo-e2e -f Dockerfile.e2e .
