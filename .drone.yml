@@ -36,9 +36,15 @@ pipeline:
       - /var/run/docker.sock:/var/run/docker.sock
 
   publish_staging:
-    image: plugins/docker
-    registry: hub.docker.com
-    repo: no0dles/angular-build-speed-demo:staging
+    image: docker
+    privileged: true
+    group: deploy
+    commands:
+      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - docker build -t no0dles/angular-build-speed-demo:staging .
+      - docker push no0dles/angular-build-speed-demo:staging
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     when:
       event: deployment
       environment: staging
@@ -48,8 +54,8 @@ pipeline:
     privileged: true
     group: deploy
     commands:
-      - docker build -t no0dles/angular-build-speed-demo:production .
       - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - docker build -t no0dles/angular-build-speed-demo:production .
       - docker push no0dles/angular-build-speed-demo:production
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
