@@ -34,3 +34,31 @@ pipeline:
       - docker build -t build-speed-demo-e2e -f Dockerfile.e2e .
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+  publish_staging:
+    image: docker
+    privileged: true
+    group: deploy
+    commands:
+      - docker build -t build-speed-demo-build -f Dockerfile.build .
+      - id=$(docker create image-name)
+      - docker cp $id:/app/dist - > dist
+      - docker rm -v $id
+      - docker build -t no0dles/angular-build-speed-demo:staging .
+    when:
+      event: deployment
+      environment: staging
+
+  publish_production:
+    image: docker
+    privileged: true
+    group: deploy
+    commands:
+      - docker build -t build-speed-demo-build -f Dockerfile.build .
+      - id=$(docker create image-name)
+      - docker cp $id:/app/dist - > dist
+      - docker rm -v $id
+      - docker build -t no0dles/angular-build-speed-demo:production .
+    when:
+      event: deployment
+      environment: production
