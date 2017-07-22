@@ -75,6 +75,7 @@ pipeline:
     privileged: true
     group: deploy
     commands:
+      - printenv
       - docker login -u no0dles -p ${DOCKER_PASSWORD}
       - docker build --build-arg ENV=production -t no0dles/angular-build-speed-demo:production .
       - docker push no0dles/angular-build-speed-demo:production
