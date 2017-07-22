@@ -1,6 +1,7 @@
 pipeline:
   build:
     image: docker
+    privileged: true
     commands:
       - docker build -t build-speed-demo-build -f Dockerfile.build .
     volumes:
@@ -8,6 +9,7 @@ pipeline:
 
   lint:
     image: docker
+    privileged: true
     commands:
       - docker build -t build-speed-demo-lint -f Dockerfile.lint .
     volumes:
@@ -15,6 +17,7 @@ pipeline:
 
   test:
     image: docker
+    privileged: true
     commands:
       - docker build -t build-speed-demo-test -f Dockerfile.test .
     volumes:
@@ -22,6 +25,7 @@ pipeline:
 
   e2e:
     image: docker
+    privileged: true
     commands:
       - docker build -t build-speed-demo-e2e -f Dockerfile.e2e .
     volumes:
