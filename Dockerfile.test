@@ -1,0 +1,21 @@
+FROM node:8.1.3
+
+WORKDIR /app
+
+RUN \
+  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+  echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list && \
+  apt-get update && \
+  apt-get install -y google-chrome-stable && \
+  rm -rf /var/lib/apt/lists/*
+
+COPY package.json .
+COPY yarn.lock .
+RUN yarn install
+
+COPY .angular-cli.json .
+COPY tsconfig.json .
+COPY karma.conf.js .
+COPY src ./src
+
+RUN yarn coverage
