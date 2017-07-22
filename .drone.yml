@@ -1,0 +1,28 @@
+pipeline:
+  build:
+    image: docker
+    commands:
+      - docker build -t build-speed-demo-build -f Dockerfile.build .
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  lint:
+    image: docker
+    commands:
+      - docker build -t build-speed-demo-lint -f Dockerfile.lint .
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  test:
+    image: docker
+    commands:
+      - docker build -t build-speed-demo-test -f Dockerfile.test .
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  e2e:
+    image: docker
+    commands:
+      - docker build -t build-speed-demo-e2e -f Dockerfile.e2e .
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
