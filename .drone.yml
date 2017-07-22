@@ -1,10 +1,29 @@
 pipeline:
-  build:
+
+  build_dev:
     image: docker
     privileged: true
     group: build
     commands:
-      - docker build -t build-speed-demo-build -f Dockerfile.build .
+      - docker build --build-arg ENV=dev -t build-speed-demo-build -f Dockerfile.build .
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  build_staging:
+    image: docker
+    privileged: true
+    group: build
+    commands:
+      - docker build --build-arg ENV=staging -t build-speed-demo-build -f Dockerfile.build .
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  build_prod:
+    image: docker
+    privileged: true
+    group: build
+    commands:
+      - docker build --build-arg ENV=prod -t build-speed-demo-build -f Dockerfile.build .
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -40,26 +59,28 @@ pipeline:
     privileged: true
     group: deploy
     commands:
-      - echo $DOCKER_USERNAME
-      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - docker build -t no0dles/angular-build-speed-demo:staging .
+      - printenv
+      - docker login -u no0dles -p ${DOCKER_PASSWORD}
+      - docker build --build-arg ENV=staging -t no0dles/angular-build-speed-demo:staging .
       - docker push no0dles/angular-build-speed-demo:staging
+    when:
+      branch: develop
+      event: [ push, tag ]
+      status: [ success ]
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    when:
-      event: deployment
-      environment: staging
 
   publish_production:
     image: docker
     privileged: true
     group: deploy
     commands:
-      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - docker build -t no0dles/angular-build-speed-demo:production .
+      - docker login -u no0dles -p ${DOCKER_PASSWORD}
+      - docker build --build-arg ENV=production -t no0dles/angular-build-speed-demo:production .
       - docker push no0dles/angular-build-speed-demo:production
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     when:
-      event: deployment
-      environment: production
+      branch: master
+      event: [ push, tag ]
+      status: [ success ]
