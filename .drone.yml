@@ -41,10 +41,12 @@ pipeline:
     group: deploy
     commands:
       - docker build -t build-speed-demo-build -f Dockerfile.build .
-      - id=$(docker create image-name)
+      - id=$(docker create build-speed-demo-build)
       - docker cp $id:/app/dist - > dist
       - docker rm -v $id
       - docker build -t no0dles/angular-build-speed-demo:staging .
+      - docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+      - docker push no0dles/angular-build-speed-demo:staging
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     when:
@@ -57,10 +59,12 @@ pipeline:
     group: deploy
     commands:
       - docker build -t build-speed-demo-build -f Dockerfile.build .
-      - id=$(docker create image-name)
+      - id=$(docker create build-speed-demo-build)
       - docker cp $id:/app/dist - > dist
       - docker rm -v $id
       - docker build -t no0dles/angular-build-speed-demo:production .
+      - docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+      - docker push no0dles/angular-build-speed-demo:production
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     when:
