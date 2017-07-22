@@ -60,9 +60,10 @@ pipeline:
     group: deploy
     commands:
       - printenv
-      - docker login -u no0dles -p ${DOCKER_PASSWORD}
+      - docker login -u no0dles -p $DOCKER_PASSWORD
       - docker build --build-arg ENV=staging -t no0dles/angular-build-speed-demo:staging .
       - docker push no0dles/angular-build-speed-demo:staging
+    secrets: [DOCKER_PASSWORD]
     when:
       branch: develop
       event: [ push, tag ]
@@ -76,11 +77,12 @@ pipeline:
     group: deploy
     commands:
       - printenv
-      - docker login -u no0dles -p ${DOCKER_PASSWORD}
+      - docker login -u no0dles -p $DOCKER_PASSWORD
       - docker build --build-arg ENV=production -t no0dles/angular-build-speed-demo:production .
       - docker push no0dles/angular-build-speed-demo:production
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    secrets: [DOCKER_PASSWORD]
     when:
       branch: master
       event: [ push, tag ]
