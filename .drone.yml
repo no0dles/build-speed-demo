@@ -40,6 +40,7 @@ pipeline:
     privileged: true
     group: deploy
     commands:
+      - echo $DOCKER_USERNAME
       - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - docker build -t no0dles/angular-build-speed-demo:staging .
       - docker push no0dles/angular-build-speed-demo:staging
