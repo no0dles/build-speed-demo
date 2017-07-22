@@ -60,7 +60,7 @@ pipeline:
     group: deploy
     commands:
       - docker login -u no0dles -p $DOCKER_PASSWORD
-      - docker build --build-arg ENV=staging -t no0dles/angular-build-speed-demo:staging .
+      - docker build --build-arg ENV=staging -t no0dles/angular-build-speed-demo:staging -t no0dles/angular-build-speed-demo:$DRONE_COMMIT .
       - docker push no0dles/angular-build-speed-demo:staging
     secrets: [DOCKER_PASSWORD]
     when:
@@ -76,7 +76,7 @@ pipeline:
     group: deploy
     commands:
       - docker login -u no0dles -p $DOCKER_PASSWORD
-      - docker build --build-arg ENV=prod -t no0dles/angular-build-speed-demo:production .
+      - docker build --build-arg ENV=prod -t no0dles/angular-build-speed-demo:production -t no0dles/angular-build-speed-demo:$DRONE_COMMIT .
       - docker push no0dles/angular-build-speed-demo:production
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
