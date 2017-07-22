@@ -45,6 +45,8 @@ pipeline:
       - docker cp $id:/app/dist - > dist
       - docker rm -v $id
       - docker build -t no0dles/angular-build-speed-demo:staging .
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     when:
       event: deployment
       environment: staging
@@ -59,6 +61,8 @@ pipeline:
       - docker cp $id:/app/dist - > dist
       - docker rm -v $id
       - docker build -t no0dles/angular-build-speed-demo:production .
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     when:
       event: deployment
       environment: production
