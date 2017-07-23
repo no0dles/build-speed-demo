@@ -1,5 +1,8 @@
 # BuildSpeedDemo
 
+
+[![Build Status](https://drone.swarm.bertschi.io/api/badges/no0dles/build-speed-demo/status.svg)](https://drone.swarm.bertschi.io/no0dles/build-speed-demo)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.1.
 
 ## Development server
