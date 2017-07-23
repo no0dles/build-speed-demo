@@ -14,4 +14,5 @@ ARG ENV
 RUN yarn build-$ENV
 
 FROM nginx:latest
+EXPOSE 80
 COPY --from=build /app/dist /usr/share/nginx/html
