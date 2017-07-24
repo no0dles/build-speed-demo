@@ -57,7 +57,6 @@ pipeline:
   publish_staging:
     image: docker
     privileged: true
-    group: deploy
     commands:
       - docker login -u no0dles -p $DOCKER_PASSWORD
       - docker build --build-arg ENV=staging -t no0dles/angular-build-speed-demo:staging -t no0dles/angular-build-speed-demo:staging-$DRONE_COMMIT .
@@ -74,7 +73,6 @@ pipeline:
   publish_production:
     image: docker
     privileged: true
-    group: deploy
     commands:
       - docker login -u no0dles -p $DOCKER_PASSWORD
       - docker build --build-arg ENV=prod -t no0dles/angular-build-speed-demo:production -t no0dles/angular-build-speed-demo:production-$DRONE_COMMIT .
@@ -83,6 +81,16 @@ pipeline:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     secrets: [DOCKER_PASSWORD]
+    when:
+      branch: master
+      event: [ push, tag ]
+      status: [ success ]
+
+  deploy_production:
+    image: no0dles/curl
+    commands:
+      - curl -H "Content-Type: application/json" -X POST -d '{"image":"no0dles/angular-build-speed-demo:production-$DRONE_COMMIT","serviceId":$SERVICE_ID}' https://deployment.swarm.bertschi.io
+    secrets: [SERVICE_ID]
     when:
       branch: master
       event: [ push, tag ]
