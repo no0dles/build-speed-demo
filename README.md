@@ -1,5 +1,7 @@
 # BuildSpeedDemo
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/no0dles/build-speed-demo.svg)](https://greenkeeper.io/)
+
 
 [![Build Status](https://drone.swarm.bertschi.io/api/badges/no0dles/build-speed-demo/status.svg)](https://drone.swarm.bertschi.io/no0dles/build-speed-demo)
 
