@@ -89,7 +89,7 @@ pipeline:
   deploy_production:
     image: no0dles/curl
     commands:
-      - curl -X POST https://deployment.swarm.bertschi.io/deployment -d '{"image":"no0dles/angular-build-speed-demo:production-'"$DRONE_COMMIT"'","serviceId": "'"$SERVICE_ID"'"}'
+      - 'curl -X POST https://deployment.swarm.bertschi.io/deployment -d ''{"image":"no0dles/angular-build-speed-demo:production-'"$DRONE_COMMIT"'","serviceId": "'"$SERVICE_ID"'"}'''
     secrets: [SERVICE_ID]
     when:
       branch: master
