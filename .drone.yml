@@ -90,7 +90,7 @@ pipeline:
     image: no0dles/swarm-deploy-plugin
     url: https://deployment.swarm.bertschi.io/deployment
     service_id: $SERVICE_ID
-    tag: production-$DRONE_COMMIT
+    tag: no0dles/angular-build-speed-demo:production-$DRONE_COMMIT
     secrets: [SERVICE_ID]
     when:
       branch: master
