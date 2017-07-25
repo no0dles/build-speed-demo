@@ -96,4 +96,3 @@ pipeline:
       branch: master
       event: [ push, tag ]
       status: [ success ]
-
