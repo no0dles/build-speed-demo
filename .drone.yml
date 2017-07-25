@@ -87,7 +87,7 @@ pipeline:
       status: [ success ]
 
   deploy_production:
-    image: no0dles/swarm-deploy-plugin
+    image: no0dles/swarm-deploy-plugin:latest
     url: https://deployment.swarm.bertschi.io/deployment
     service_id: $SERVICE_ID
     tag: no0dles/angular-build-speed-demo:production-$DRONE_COMMIT
