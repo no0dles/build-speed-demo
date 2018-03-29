@@ -87,10 +87,13 @@ pipeline:
       status: [ success ]
 
   deploy_production:
-    image: no0dles/swarm-deploy-plugin:latest
-    url: https://deployment.swarm.bertschi.io/deployment
-    tag: no0dles/angular-build-speed-demo:production-${DRONE_COMMIT}
-    secrets: [SERVICE_ID]
+    image: quay.io/honestbee/drone-kubernetes
+    deployment: angular-build-speed-demo-prod
+    repo: no0dles/angular-build-speed-demo
+    container: web
+    tag: 
+        - production-$DRONE_COMMIT
+    secrets: [KUBERNETES_SERVER, KUBERNETES_CERT, KUBERNETES_TOKEN]
     when:
       branch: master
       event: [ push, tag ]
