@@ -92,7 +92,7 @@ pipeline:
     repo: no0dles/angular-build-speed-demo
     container: web
     tag: 
-        - production-$DRONE_COMMIT
+      - "production-${DRONE_COMMIT}"
     secrets: [KUBERNETES_SERVER, KUBERNETES_CERT, KUBERNETES_TOKEN]
     when:
       branch: master
