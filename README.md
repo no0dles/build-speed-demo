@@ -3,7 +3,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/no0dles/build-speed-demo.svg)](https://greenkeeper.io/)
 
 
-[![Build Status](https://drone.swarm.bertschi.io/api/badges/no0dles/build-speed-demo/status.svg)](https://drone.swarm.bertschi.io/no0dles/build-speed-demo)
+[![Build Status](https://ci.bertschi.io/api/badges/no0dles/build-speed-demo/status.svg)](https://ci.bertschi.io/no0dles/build-speed-demo)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.1.
 
