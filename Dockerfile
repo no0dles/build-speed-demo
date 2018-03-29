@@ -16,4 +16,4 @@ RUN yarn build-$ENV
 FROM fholzer/nginx-brotli:latest
 EXPOSE 80
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=0 /app/dist /usr/share/nginx/html
+# COPY --from=0 /app/dist /usr/share/nginx/html
